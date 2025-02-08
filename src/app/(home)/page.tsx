@@ -1,11 +1,11 @@
-import HomeCarousel from '@/components/shared/home/home-carousel'
 import { HomeCard } from '@/components/shared/home/home-card'
+import HomeCarousel from '@/components/shared/home/home-carousel'
 
 //actions
 import {
   getAllCategories,
   getProductsForCard,
-} from '@/lib/db/actions/product.actions'
+} from '@/lib/actions/product.actions'
 
 import data from '@/lib/data'
 import { toSlug } from '@/lib/utils'
