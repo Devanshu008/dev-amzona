@@ -81,4 +81,7 @@ body {
   .h1-bold{
     @apply text-2xl font-bold lg:text-3xl;
   }
+  .h2-bold{
+    @apply text-lg font-bold lg:text-xl;
+  }
 }
