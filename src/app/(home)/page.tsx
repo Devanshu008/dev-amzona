@@ -14,7 +14,8 @@ import data from '@/lib/data'
 import { toSlug } from '@/lib/utils'
 
 export default async function Page() {
-  const categories = (await getAllCategories()).slice(0, 4)
+  const categories = (await getAllCategories())?.data?.slice(0, 4) || []
+  
   const todaysDeals = await getProductsByTag({ tag: 'todays-deal' })
   const bestSellingProducts = await getProductsByTag({ tag: 'best-seller' })
 
@@ -48,7 +49,7 @@ export default async function Page() {
     },
     {
       title: 'New Arrivals',
-      items: newArrivals,
+      items: newArrivals?.data || [],
       link: {
         text: 'View all',
         href: '/search?tag=new-arrival',
@@ -56,7 +57,7 @@ export default async function Page() {
     },
     {
       title: 'Discover Best Sellers',
-      items: bestSellers,
+      items: bestSellers?.data || [],
       link: {
         text: 'View all',
         href: '/search?tag=best-seller',
@@ -64,7 +65,7 @@ export default async function Page() {
     },
     {
       title: 'Featured',
-      items: featured,
+      items: featured?.data || [],
       link: {
         text: 'Shop Now',
         href: '/search?tag=featured',
@@ -80,13 +81,19 @@ export default async function Page() {
 
         <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
-              <ProductSlider title='Today’s Deals' products={todaysDeals} />
+            <ProductSlider
+              title='Today’s Deals'
+              products={todaysDeals?.data || []}
+            />
           </CardContent>
         </Card>
 
         <Card className='w-full rounded-none'>
           <CardContent className='p-4 items-center gap-3'>
-              <ProductSlider title='Best Selling Products' products={bestSellingProducts} />
+            <ProductSlider
+              title='Best Selling Products'
+              products={bestSellingProducts?.data || []}
+            />
           </CardContent>
         </Card>
       </div>
