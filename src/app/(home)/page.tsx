@@ -4,6 +4,7 @@ import { HomeCard } from '@/features/home/components/home-card'
 import HomeCarousel from '@/features/home/components/home-carousel'
 
 import ProductSlider from '@/features/products/components/product-slider'
+import BrowsingHistoryList from '@/features/products/components/browser-history-list'
 
 //actions
 import { getAllCategories, getProductsByTag, getProductsForCard } from '@/features/products/server/actions/product.actions'
@@ -95,6 +96,9 @@ export default async function Page() {
             />
           </CardContent>
         </Card>
+      </div>
+      <div className="p-4 bg-background">
+        <BrowsingHistoryList/>
       </div>
     </>
   )

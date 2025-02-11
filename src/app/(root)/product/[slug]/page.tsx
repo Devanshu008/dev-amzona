@@ -6,6 +6,8 @@ import ProductPrice from '@/features/products/components/product-price'
 import ProductSlider from '@/features/products/components/product-slider'
 import Rating from '@/features/products/components/rating'
 import SelectVariant from '@/features/products/components/select-variant'
+import BrowsingHistoryList from '@/features/products/components/browser-history-list'
+import AddToBrowsingHistory from '@/features/products/components/add-to-browsing-history'
 
 import {
   getOneProductBySlug,
@@ -28,7 +30,7 @@ export async function generateMetadata(props: {
     }
   } catch (error) {
     console.log(error)
-    
+
     return {
       title: 'Product not found',
       description: 'Product not found',
@@ -64,6 +66,14 @@ const ProductDetails = async (props: {
 
   return (
     <>
+      <AddToBrowsingHistory
+        id={productData.id ?? ''}
+        category={
+          Array.isArray(productData.category)
+            ? productData.category
+            : [productData.category]
+        }
+      />
       <section>
         <div className='grid grid-cols-1 md:grid-cols-5'>
           <div className='col-span-2'>
@@ -138,6 +148,9 @@ const ProductDetails = async (props: {
           products={relatedProducts.data?.products ?? []}
           title={`Best Selling in ${productData.category}s`}
         />
+      </section>
+      <section>
+        <BrowsingHistoryList className='mt-10' />
       </section>
     </>
   )
