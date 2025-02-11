@@ -1,18 +1,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import ImageHover from '@/components/shared/product/image-hover'
-import ProductPrice from '@/components/shared/product/product-price'
-import Rating from '@/components/shared/product/rating'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
+import ImageHover from '@/features/products/components/image-hover'
+import ProductPrice from '@/features/products/components/product-price'
+import Rating from '@/features/products/components/rating'
+
 import { formatNumber } from '@/lib/utils'
-import { IProductInput } from '@/types'
+
+import { IProductInput } from '@/features/products/types'
 
 const ProductCard = ({
   product,
   hideBorder = false,
   hideDetails = false,
+
 //   hideAddToCart = false,
 }: {
   product: IProductInput
@@ -43,6 +46,7 @@ const ProductCard = ({
       </div>
     </Link>
   )
+
   const ProductDetails = () => (
     <div className='flex-1 space-y-2'>
       <p className='font-bold'>{product.brand}</p>

@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { useState } from 'react'
+
 import Image from 'next/image'
+
 
 const ImageHover = ({
   src,
@@ -14,6 +15,7 @@ const ImageHover = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   let hoverTimeout: any
+
   const handleMouseEnter = () => {
     hoverTimeout = setTimeout(() => setIsHovered(true), 1000) // 1 second delay
   }

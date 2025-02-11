@@ -2,7 +2,8 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 
-import { IProductInput } from '@/types'
+import { IProductInput } from '@/features/products/types'
+
 
 export default function SelectVariant({
   product,

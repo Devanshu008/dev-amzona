@@ -1,14 +1,10 @@
 
 
-import data from '@/lib/data'
-import { db } from '@/lib/db'
-
+import { db } from '@/db'
+import products from '@/features/products/server/db/data'
 
 const seed = async () => {
   try {
-    const { products } = data
-
-
     const createdProducts = await db.product.createMany({
         data: products
     })

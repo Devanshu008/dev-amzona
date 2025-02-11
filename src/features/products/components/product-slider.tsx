@@ -7,9 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import ProductCard from '@/components/shared/product/product-card'
 
-import { IProductInput } from '@/types'
+import ProductCard from '@/features/products/components/product-card'
+import { IProductInput } from '@/features/products/types'
 
 export default function ProductSlider({
   title,

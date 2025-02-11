@@ -1,14 +1,13 @@
-import { HomeCard } from '@/components/shared/home/home-card'
-import HomeCarousel from '@/components/shared/home/home-carousel'
-import ProductSlider from '@/components/shared/product/product-slider'
 import { Card, CardContent } from '@/components/ui/card'
 
+import { HomeCard } from '@/features/home/components/home-card'
+import HomeCarousel from '@/features/home/components/home-carousel'
+
+import ProductSlider from '@/features/products/components/product-slider'
+
 //actions
-import {
-  getAllCategories,
-  getProductsByTag,
-  getProductsForCard,
-} from '@/lib/actions/product.actions'
+import { getAllCategories, getProductsByTag, getProductsForCard } from '@/features/products/server/actions/product.actions'
+
 
 import data from '@/lib/data'
 import { toSlug } from '@/lib/utils'

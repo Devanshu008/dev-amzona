@@ -1,3 +1,4 @@
+
 import { z } from 'zod'
 
 import {
@@ -7,8 +8,6 @@ import {
   OrderInputSchema,
   OrderItemSchema,
   PaymentMethodSchema,
-  ProductInputSchema,
-  ReviewInputSchema,
   SettingInputSchema,
   ShippingAddressSchema,
   SiteCurrencySchema,
@@ -20,26 +19,7 @@ import {
   WebPageInputSchema,
 } from '@/lib/validator'
 
-export type IReviewInput = z.infer<typeof ReviewInputSchema>
-export type IReviewDetails = IReviewInput & {
-  _id: string
-  createdAt: string
-  user: {
-    name: string
-  }
-}
-export type IProductInput = z.infer<typeof ProductInputSchema>
-
 export type Data = {
-  // settings: ISettingInput[]
-  // webPages: IWebPageInput[]
-  // users: IUserInput[]
-  products: IProductInput[]
-  // reviews: {
-  //   title: string
-  //   rating: number
-  //   comment: string
-  // }[]
   headerMenus: {
     name: string
     href: string
@@ -52,6 +32,7 @@ export type Data = {
     isPublished: boolean
   }[]
 }
+
 // Order
 export type IOrderInput = z.infer<typeof OrderInputSchema>
 export type IOrderList = IOrderInput & {

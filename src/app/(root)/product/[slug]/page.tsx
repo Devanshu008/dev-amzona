@@ -1,15 +1,17 @@
-import ProductGallery from '@/components/shared/product/product-gallery'
-import ProductPrice from '@/components/shared/product/product-price'
-import ProductSlider from '@/components/shared/product/product-slider'
-import Rating from '@/components/shared/product/rating'
-import SelectVariant from '@/components/shared/product/select-variant'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+
+import ProductGallery from '@/features/products/components/product-gallery'
+import ProductPrice from '@/features/products/components/product-price'
+import ProductSlider from '@/features/products/components/product-slider'
+import Rating from '@/features/products/components/rating'
+import SelectVariant from '@/features/products/components/select-variant'
+
 import {
   getOneProductBySlug,
   getRelatedProductsByCategory,
-} from '@/lib/actions/product.actions'
-import { IProductInput } from '@/types'
+} from '@/features/products/server/actions/product.actions'
+import { IProductInput } from '@/features/products/types'
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>
@@ -26,6 +28,7 @@ export async function generateMetadata(props: {
     }
   } catch (error) {
     console.log(error)
+    
     return {
       title: 'Product not found',
       description: 'Product not found',

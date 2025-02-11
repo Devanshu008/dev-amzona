@@ -2,8 +2,8 @@
 
 import { PAGE_SIZE, ApiResponse } from '@/lib/constants'
 
-import { IProductInput } from '@/types'
-import { db } from '../db'
+import { IProductInput } from '@/features/products/types'
+import { db } from '@/db'
 
 interface GetRelatedProductsParams {
   category: string
@@ -27,6 +27,7 @@ export async function getAllCategories(): Promise<ApiResponse<string[]>> {
     }
   } catch (error) {
     console.error('Error fetching categories:', error)
+
     return {
       status: 'error',
       message: 'Failed to fetch categories.',
@@ -62,6 +63,7 @@ export async function getProductsForCard({
     }
   } catch (error) {
     console.error('Error fetching products for card:', error)
+
     return {
       status: 'error',
       message: 'Failed to fetch products for card.',
@@ -92,6 +94,7 @@ export async function getProductsByTag({
     }
   } catch (error) {
     console.error('Error fetching products by tag:', error)
+
     return {
       status: 'error',
       message: 'Failed to fetch products by tag.',
@@ -124,6 +127,7 @@ export async function getOneProductBySlug(
     }
   } catch (error) {
     console.error('Error fetching product by slug:', error)
+
     return {
       status: 'error',
       message: 'Failed to fetch product by slug.',
@@ -140,58 +144,57 @@ export async function getRelatedProductsByCategory({
   page = 1,
 }: GetRelatedProductsParams): Promise<
   ApiResponse<{
-    products: IProductInput[];
+    products: IProductInput[]
     meta: {
-      totalPages: number;
-      totalProducts: number;
-      currentPage: number;
-      nextPage: number | null;
-      prevPage: number | null;
-    };
+      totalPages: number
+      totalProducts: number
+      currentPage: number
+      nextPage: number | null
+      prevPage: number | null
+    }
   }>
 > {
   try {
-
     // ✅ Validate input
     if (!category || !productId) {
       return {
-        status: "error",
-        message: "Category and Product ID are required.",
-      };
+        status: 'error',
+        message: 'Category and Product ID are required.',
+      }
     }
 
-    const skip = (Number(page) - 1) * limit;
+    const skip = (Number(page) - 1) * limit
 
     const conditions = {
       category: { equals: category },
       isPublished: true,
       NOT: { id: productId }, // Exclude the current product
-    };
+    }
 
     // ✅ Fetch products and total count
     const [products, productsCount] = await Promise.all([
       db.product.findMany({
         where: conditions,
         take: limit,
-        orderBy: { createdAt: "desc" },
+        orderBy: { createdAt: 'desc' },
         skip,
       }),
       db.product.count({ where: conditions }),
-    ]);
+    ])
 
     // ✅ Validate productsCount (Ensure it's a number)
     if (isNaN(productsCount)) {
-      throw new Error("Invalid products count returned from database.");
+      throw new Error('Invalid products count returned from database.')
     }
 
     // ✅ Calculate pagination
-    const totalPages = Math.ceil(productsCount / limit);
-    const hasNextPage = page < totalPages;
-    const hasPrevPage = page > 1;
+    const totalPages = Math.ceil(productsCount / limit)
+    const hasNextPage = page < totalPages
+    const hasPrevPage = page > 1
 
     return {
-      status: "success",
-      message: "Related products fetched successfully.",
+      status: 'success',
+      message: 'Related products fetched successfully.',
       data: {
         products: products ?? [], // Ensure products is an array
         meta: {
@@ -202,13 +205,14 @@ export async function getRelatedProductsByCategory({
           prevPage: hasPrevPage ? page - 1 : null,
         },
       },
-    };
+    }
   } catch (error) {
-    console.error("Error fetching related products:", error);
+    console.error('Error fetching related products:', error)
+
     return {
-      status: "error",
-      message: "Failed to fetch related products.",
+      status: 'error',
+      message: 'Failed to fetch related products.',
       error: (error as Error).message,
-    };
+    }
   }
 }
