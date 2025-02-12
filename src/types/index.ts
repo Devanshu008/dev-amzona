@@ -3,13 +3,9 @@ import { z } from 'zod'
 
 import {
   CarouselSchema,
-  CartSchema,
   DeliveryDateSchema,
-  OrderInputSchema,
-  OrderItemSchema,
   PaymentMethodSchema,
   SettingInputSchema,
-  ShippingAddressSchema,
   SiteCurrencySchema,
   SiteLanguageSchema,
   UserInputSchema,
@@ -32,20 +28,6 @@ export type Data = {
     isPublished: boolean
   }[]
 }
-
-// Order
-export type IOrderInput = z.infer<typeof OrderInputSchema>
-export type IOrderList = IOrderInput & {
-  _id: string
-  user: {
-    name: string
-    email: string
-  }
-  createdAt: Date
-}
-export type OrderItem = z.infer<typeof OrderItemSchema>
-export type Cart = z.infer<typeof CartSchema>
-export type ShippingAddress = z.infer<typeof ShippingAddressSchema>
 
 // user
 export type IUserInput = z.infer<typeof UserInputSchema>

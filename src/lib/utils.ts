@@ -34,3 +34,7 @@ export const formatCurrency = (amount: number): string => CURRENCY_FORMATTER.for
 const NUMBER_FORMATTER = new Intl.NumberFormat('en-US')
 
 export const formatNumber = (amount: number): string => NUMBER_FORMATTER.format(amount)
+
+export const round2 = (num: number): number => Math.round((num + Number.EPSILON) * 100) / 100
+
+export const generateId = () => Array.from({ length: 24 }, () => Math.floor(Math.random() * 10)).join('')

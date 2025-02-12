@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { MenuIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+
 import Menu from '@/components/shared/header/menu'
 import Search from '@/components/shared/header/search'
 

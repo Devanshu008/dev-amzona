@@ -1,6 +1,8 @@
+/* eslint-disable boundaries/element-types */
 import Link from 'next/link'
 
-import { ShoppingCartIcon } from 'lucide-react'
+
+import CartButton from '@/features/order/components/cart-button'
 
 const Menu = () => {
   return (
@@ -15,12 +17,7 @@ const Menu = () => {
           Hello, Sign in
         </Link>
 
-        <Link href='/cart' className='header-button flex items-center gap-1'>
-          <div className='flex items-end'>
-            <ShoppingCartIcon className='size-8' />
-            Cart
-          </div>
-        </Link>
+        <CartButton />
       </nav>
     </div>
   )

@@ -13,6 +13,10 @@ import {
   getOneProductBySlug,
   getRelatedProductsByCategory,
 } from '@/features/products/server/actions/product.actions'
+
+import AddToCart from '@/features/order/components/add-to-cart'
+
+import { generateId, round2 } from '@/lib/utils'
 import { IProductInput } from '@/features/products/types'
 
 export async function generateMetadata(props: {
@@ -136,6 +140,26 @@ const ProductDetails = async (props: {
                   <div className='text-green-700 text-xl'>In stock</div>
                 ) : (
                   <div className='text-destructive text-xl'>Out of stock</div>
+                )}
+
+                {productData.countInStock !== 0 && (
+                  <div className='flex justify-center items-center'>
+                    <AddToCart
+                      item={{
+                        clientId: generateId(),
+                        product: productData.id ?? '',
+                        countInStock: productData.countInStock,
+                        name: productData.name,
+                        slug: productData.slug,
+                        category: productData.category,
+                        price: round2(productData.price),
+                        quantity: 1,
+                        image: productData.images[0],
+                        size: size || productData.sizes[0],
+                        color: color || productData.colors[0],
+                      }}
+                    />
+                  </div>
                 )}
               </CardContent>
             </Card>

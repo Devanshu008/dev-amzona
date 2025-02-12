@@ -7,6 +7,11 @@ export const APP_DESCRIPTION =
 
 export const PAGE_SIZE = Number(process.env.NEXT_PAGE_SIZE || 9)
 
+export const FREE_SHIPPING_MIN_PRICE = Number(
+  process.env.NEXT_FREE_SHIPPING_MIN_PRICE || 35
+)
+
+
 export interface ApiResponse<T> {
   status: string
   message: string
