@@ -85,3 +85,7 @@ body {
     @apply text-lg font-bold lg:text-xl;
   }
 }
+
+#nprogress .bar {
+  @apply bg-primary h-1
+}
