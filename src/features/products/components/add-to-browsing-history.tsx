@@ -1,7 +1,8 @@
 'use client'
 import { useEffect } from 'react'
 
-import useBrowsingHistory from '@/hooks/use-browsing-history'
+import { useAppDispatch } from '@/store/hook'
+import { addItem } from '@/store/slices/browsing-history-slice'
 
 export default function AddToBrowsingHistory({
   id,
@@ -10,12 +11,12 @@ export default function AddToBrowsingHistory({
   id: string
   category: string[]
 }) {
-  const { addItem } = useBrowsingHistory()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    addItem({ id, category })
+    dispatch(addItem({ id, category }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
-return null
+
+  return null
 }

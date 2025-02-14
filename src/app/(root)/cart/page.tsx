@@ -17,7 +17,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import useCartStore from '@/features/order/hooks/use-cart-store'
+//Store and actions
+import { useAppDispatch, useAppSelector } from '@/store/hook'
+import {
+  updateItemAndTotals,
+  removeItemAndUpdate,
+} from '@/store/slices/cart-slice'
+
 
 import ProductPrice from '@/features/products/components/product-price'
 import BrowsingHistoryList from '@/features/products/components/browser-history-list'
@@ -25,11 +31,8 @@ import BrowsingHistoryList from '@/features/products/components/browser-history-
 import { APP_NAME, FREE_SHIPPING_MIN_PRICE } from '@/lib/constants'
 
 export default function CartPage() {
-  const {
-    cart: { items, itemsPrice },
-    updateItem,
-    removeItem,
-  } = useCartStore()
+  const dispatch = useAppDispatch()
+  const { items, itemsPrice } = useAppSelector((state) => state.cart)
 
   const router = useRouter()
 
@@ -100,7 +103,12 @@ export default function CartPage() {
                           <Select
                             value={item.quantity.toString()}
                             onValueChange={(value) =>
-                              updateItem(item, Number(value))
+                              dispatch(
+                                updateItemAndTotals({
+                                  item,
+                                  quantity: Number(value),
+                                })
+                              )
                             }
                           >
                             <SelectTrigger className='w-auto'>
@@ -120,7 +128,13 @@ export default function CartPage() {
                           </Select>
                           <Button
                             variant={'outline'}
-                            onClick={() => removeItem(item)}
+                            onClick={() =>
+                              dispatch(
+                                removeItemAndUpdate({
+                                  item,
+                                })
+                              )
+                            }
                           >
                             Delete
                           </Button>

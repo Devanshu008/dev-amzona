@@ -20,24 +20,26 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import ProductPrice from '@/features/products/components/product-price'
+//Store and actions
+import { useAppDispatch, useAppSelector } from '@/store/hook'
+import {
+  updateItemAndTotals,
+  removeItemAndUpdate,
+} from '@/store/slices/cart-slice'
 
-import useCartStore from '@/features/order/hooks/use-cart-store'
+import ProductPrice from '@/features/products/components/product-price'
 
 import { FREE_SHIPPING_MIN_PRICE } from '@/lib/constants'
 
 export default function CartSidebar() {
-  const {
-    cart: { items, itemsPrice },
-    updateItem,
-    removeItem,
-  } = useCartStore()
+  const dispatch = useAppDispatch()
+  const { items, itemsPrice } = useAppSelector((state) => state.cart)
 
-  //   const {
-  //     setting: {
-  //       common: { freeShippingMinPrice },
-  //     },
-  //   } = useSettingStore()
+
+  if(items.length === 0) {
+    return null
+  }
+
 
   return (
     <div className='w-32 overflow-y-auto'>
@@ -90,9 +92,14 @@ export default function CartSidebar() {
                   <div className='flex gap-2 mt-2'>
                     <Select
                       value={item.quantity.toString()}
-                      onValueChange={(value) => {
-                        updateItem(item, Number(value))
-                      }}
+                      onValueChange={(value) =>
+                        dispatch(
+                          updateItemAndTotals({
+                            item,
+                            quantity: Number(value),
+                          })
+                        )
+                      }
                     >
                       <SelectTrigger className='text-xs w-12 ml-1 h-auto py-0'>
                         <SelectValue />
@@ -110,9 +117,13 @@ export default function CartSidebar() {
                     <Button
                       variant={'outline'}
                       size={'sm'}
-                      onClick={() => {
-                        removeItem(item)
-                      }}
+                      onClick={() =>
+                        dispatch(
+                          removeItemAndUpdate({
+                            item,
+                          })
+                        )
+                      }
                     >
                       <TrashIcon className='w-4 h-4' />
                     </Button>

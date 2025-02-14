@@ -4,25 +4,25 @@ import { useEffect } from "react"
 
 import { usePathname } from "next/navigation"
 
-import NProgress from "nprogress"
+import progressBar from "nprogress"
 import "nprogress/nprogress.css"
 
 // Configure NProgress (optional)
-NProgress.configure({ showSpinner: false, speed: 400, minimum: 0.2 })
+progressBar.configure({ showSpinner: false, speed: 400 })
 
 export default function Loader() {
   const pathname = usePathname()
 
   useEffect(() => {
-    NProgress.start()
+    progressBar.start()
 
     const timer = setTimeout(() => {
-      NProgress.done()
+      progressBar.done()
     }, 500) // Delay to smooth transitions
 
     return () => {
       clearTimeout(timer)
-      NProgress.done()
+      progressBar.done()
     }
   }, [pathname]) // Trigger effect when the path changes
 

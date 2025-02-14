@@ -12,9 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useToast } from '@/hooks/use-toast'
 
-import useCartStore from '@/features/order/hooks/use-cart-store'
+//Store and actions
+import { useAppDispatch, useAppSelector } from '@/store/hook'
+import { addItemAndUpdate } from '@/store/slices/cart-slice'
+
+import { useToast } from '@/hooks/use-toast'
 
 import { OrderItem } from '@/features/order/types'
 
@@ -28,7 +31,8 @@ export default function AddToCart({
   const router = useRouter()
   const { toast } = useToast()
 
-  const { addItem } = useCartStore()
+  const dispatch = useAppDispatch()
+  const { items } = useAppSelector((state) => state.cart)
 
   const [quantity, setQuantity] = useState(1)
 
@@ -37,7 +41,12 @@ export default function AddToCart({
       className='rounded-full w-auto'
       onClick={() => {
         try {
-          addItem(item, 1)
+          dispatch(
+            addItemAndUpdate({
+              item,
+              quantity: 1,
+            })
+          )
           toast({
             description: 'Item added to cart',
             action: (
@@ -77,7 +86,21 @@ export default function AddToCart({
         type='button'
         onClick={async () => {
           try {
-            const itemId = await addItem(item, quantity)
+            dispatch(
+              addItemAndUpdate({
+                item,
+                quantity,
+              })
+            )
+            
+           const hasItem = items.find(
+              (i) =>
+                i.product === item.product &&
+                i.color === item.color &&
+                i.size === item.size
+            )?.clientId!
+
+            const itemId = hasItem || item.clientId
 
             router.push(`/cart/${itemId}`)
           } catch (error: any) {
@@ -95,7 +118,12 @@ export default function AddToCart({
         className='w-full rounded-full'
         onClick={async () => {
           try {
-            await addItem(item, quantity)
+            dispatch(
+              addItemAndUpdate({
+                item,
+                quantity,
+              })
+            )
             router.push('/checkout')
           } catch (error: any) {
             toast({

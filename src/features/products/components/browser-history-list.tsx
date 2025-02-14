@@ -1,8 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
-
-import useBrowsingHistory from '@/hooks/use-browsing-history'
+import { useAppSelector } from '@/store/hook'
 
 import { Separator } from '@/components/ui/separator'
 
@@ -14,10 +13,9 @@ export default function BrowsingHistoryList({
 }: {
   className?: string
 }) {
-  const { products } = useBrowsingHistory()
+  const { products } = useAppSelector((state) => state.browsingHistory)
 
-  
-return (
+  return (
     products.length !== 0 && (
       <div className='bg-background'>
         <Separator className={cn('mb-4', className)} />
@@ -47,7 +45,7 @@ function ProductList({
   excludeId?: string
   hideDetails?: boolean
 }) {
-  const { products } = useBrowsingHistory()
+  const { products } = useAppSelector((state) => state.browsingHistory)
   const [data, setData] = useState([])
 
   useEffect(() => {

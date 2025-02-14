@@ -7,26 +7,22 @@ import { notFound } from 'next/navigation'
 
 import { CheckCircle2Icon } from 'lucide-react'
 
+import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
-import BrowsingHistoryList from '@/features/products/components/browser-history-list'
+//Store
+import { useAppSelector } from '@/store/hook'
 
-import useCartStore from '@/features/order/hooks/use-cart-store'
-import { FREE_SHIPPING_MIN_PRICE } from '@/lib/constants'
+import BrowsingHistoryList from '@/features/products/components/browser-history-list'
 import ProductPrice from '@/features/products/components/product-price'
+
+
+import { FREE_SHIPPING_MIN_PRICE } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
 
 export default function CartAddItem({ itemId }: { itemId: string }) {
-  const {
-    cart: { items, itemsPrice },
-  } = useCartStore()
 
-  //   const {
-  //     setting: {
-  //       common: { freeShippingMinPrice },
-  //     },
-  //   } = useSettingStore()
+  const { items, itemsPrice } = useAppSelector((state) => state.cart)
 
   const item = items.find((x) => x.clientId === itemId)
 

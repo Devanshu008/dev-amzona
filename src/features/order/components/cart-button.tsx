@@ -7,15 +7,15 @@ import { ShoppingCartIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import useInMounted from '@/hooks/use-in-mounted'
 
-import useCartStore from '@/features/order/hooks/use-cart-store'
+//Store and actions
+import { useAppSelector } from '@/store/hook'
+
 import useCartSidebar from '@/features/order/hooks/use-cart-sidebar'
 
 export default function CartButton() {
   const isMounted = useInMounted()
 
-  const {
-    cart: { items },
-  } = useCartStore()
+  const { items } = useAppSelector((state) => state.cart)
 
   const cartItemsCount = items.reduce((a, c) => a + c.quantity, 0)
 
@@ -38,7 +38,7 @@ export default function CartButton() {
         )}
         <span className='font-bold'>Cart</span>
 
-        {isCartSidebarOpen && (
+        {isCartSidebarOpen && items.length > 0 && (
           <div
             className={`absolute top-[20px] right-[-16px] rotate-[-90deg] z-10 w-0 h-0 border-l-[7px] border-r-[7px] border-b-[8px] border-transparent border-b-background`}
           ></div>

@@ -77,16 +77,21 @@ module.exports = {
             from: ['feature'],
             allow: [
               'shared',
+              'store',
               ['feature', { featureName: '${from.featureName}' }],
             ],
           },
           {
             from: ['app', 'neverImport'],
-            allow: ['shared', 'feature'],
+            allow: ['shared', 'feature','store'],
           },
           {
             from: ['app'],
-            allow: [['app', { fileName: '*.{css,tsx,ts}' }]],
+            allow: [['app', { fileName: '*.{css,tsx,ts}' }, ]],
+          },
+          {
+            from: ['store'],
+            allow: ['feature','store'],
           },
         ],
       },
@@ -113,6 +118,11 @@ module.exports = {
       },
       {
         mode: 'full',
+        type: 'store',
+        pattern: ['src/store/**/*'],
+      },
+      {
+        mode: 'full',
         type: 'feature',
         capture: ['featureName'],
         pattern: ['src/features/*/**/*'],
@@ -131,4 +141,4 @@ module.exports = {
       },
     ],
   },
-};
+}
