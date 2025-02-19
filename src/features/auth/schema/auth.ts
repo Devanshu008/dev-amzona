@@ -3,8 +3,8 @@ import { z } from 'zod'
 import { MongoId } from '@/lib/validator'
 
 enum UserRoleENUM {
-  User = "User",
-  Admin = "Admin",
+  User = 'User',
+  Admin = 'Admin',
 }
 
 const UserName = z

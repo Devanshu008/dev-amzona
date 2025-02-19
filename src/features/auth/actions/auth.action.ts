@@ -3,14 +3,17 @@ import { redirect } from 'next/navigation'
 
 import { AuthError } from 'next-auth'
 
+import bcrypt from 'bcryptjs'
 import * as z from 'zod'
 
-import { LoginSchema } from '@/lib/validator'
 import { db } from '@/db'
+import { UserSignInSchema, UserSignUpSchema } from '@/features/auth/schema/auth'
 import { signIn, signOut } from '@/next-auth'
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
-  const validatedFields = LoginSchema.safeParse(values)
+import { formatError } from '@/lib/utils'
+
+export const login = async (values: z.infer<typeof UserSignInSchema>) => {
+  const validatedFields = UserSignInSchema.safeParse(values)
 
   if (!validatedFields.success) {
     return {
@@ -82,4 +85,35 @@ export const logOut = async () => {
   })
 
   redirect(redirectTo.redirect)
+}
+
+export const register = async (values: z.infer<typeof UserSignUpSchema>) => {
+  try {
+    const validatedFields = UserSignUpSchema.safeParse(values)
+
+    if (!validatedFields.success) {
+      throw new Error(validatedFields.error.message)
+    }
+
+    const { email, name, password } = validatedFields.data
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const existingUser = await db.user.findUnique({ where: { email } })
+
+    if (existingUser) {
+      throw new Error('User already exists')
+    }
+
+    await db.user.create({
+      data: {
+        email,
+        name,
+        password: hashedPassword,
+      },
+    })
+
+    return { success: 'User created successfully' }
+  } catch (error) {
+    return { error: formatError(error) }
+  }
 }

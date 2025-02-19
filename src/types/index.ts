@@ -1,4 +1,3 @@
-
 import { z } from 'zod'
 
 import {
@@ -8,7 +7,7 @@ import {
   SettingInputSchema,
   SiteCurrencySchema,
   SiteLanguageSchema,
-  WebPageInputSchema
+  WebPageInputSchema,
 } from '@/lib/validator'
 
 export type Data = {
