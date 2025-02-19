@@ -71,27 +71,32 @@ module.exports = {
         rules: [
           {
             from: ['shared'],
-            allow: ['shared'],
+            allow: ['shared','next-auth'],
           },
           {
             from: ['feature'],
             allow: [
               'shared',
               'store',
+              'next-auth',
               ['feature', { featureName: '${from.featureName}' }],
             ],
           },
           {
             from: ['app', 'neverImport'],
-            allow: ['shared', 'feature','store'],
+            allow: ['shared', 'feature', 'store', 'next-auth'],
           },
           {
             from: ['app'],
-            allow: [['app', { fileName: '*.{css,tsx,ts}' }, ]],
+            allow: [['app', { fileName: '*.{css,tsx,ts}' }]],
           },
           {
             from: ['store'],
-            allow: ['feature','store'],
+            allow: ['feature', 'store'],
+          },
+          {
+            from: ['next-auth'],
+            allow: ['feature', 'store', 'next-auth', 'shared'],
           },
         ],
       },
@@ -120,6 +125,11 @@ module.exports = {
         mode: 'full',
         type: 'store',
         pattern: ['src/store/**/*'],
+      },
+      {
+        mode: 'full',
+        type: 'next-auth',
+        pattern: ['src/next-auth/**/*'],
       },
       {
         mode: 'full',

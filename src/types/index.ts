@@ -8,11 +8,7 @@ import {
   SettingInputSchema,
   SiteCurrencySchema,
   SiteLanguageSchema,
-  UserInputSchema,
-  UserNameSchema,
-  UserSignInSchema,
-  UserSignUpSchema,
-  WebPageInputSchema,
+  WebPageInputSchema
 } from '@/lib/validator'
 
 export type Data = {
@@ -28,12 +24,6 @@ export type Data = {
     isPublished: boolean
   }[]
 }
-
-// user
-export type IUserInput = z.infer<typeof UserInputSchema>
-export type IUserSignIn = z.infer<typeof UserSignInSchema>
-export type IUserSignUp = z.infer<typeof UserSignUpSchema>
-export type IUserName = z.infer<typeof UserNameSchema>
 
 // webpage
 export type IWebPageInput = z.infer<typeof WebPageInputSchema>

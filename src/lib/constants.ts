@@ -4,6 +4,9 @@ export const APP_SLOGAN =
 export const APP_DESCRIPTION =
   process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
   'DevAmzn is a full-stack e-commerce application built with Next.js, Tailwind CSS, and Stripe.'
+export const APP_COPYRIGHT =
+  process.env.NEXT_PUBLIC_APP_COPYRIGHT || `Copyright © ${new Date().getFullYear()} ${APP_NAME}. All rights reserved.`
+
 
 export const PAGE_SIZE = Number(process.env.NEXT_PAGE_SIZE || 9)
 
